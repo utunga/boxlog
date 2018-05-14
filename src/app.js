@@ -35,26 +35,8 @@ app.use('/', express.static(app.get('public')));
 app.configure(express.rest());
 app.configure(socketio());
 
-// Configure other middleware (see `middleware/index.js`)
-app.configure(middleware);
-// Set up our services (see `services/index.js`)
-app.configure(services);
-// Set up event channels (see channels.js)
-app.configure(channels);
-
-// Configure a middleware for 404s and the error handler
-app.use(express.notFound());
-app.use(express.errorHandler({ logger }));
-
-app.hooks(appHooks);
-
 // FOR NOW
 
-// On any real-time connection, add it to the `everybody` channel
-app.on('connection', connection => app.channel('everybody').join(connection));
-
-// Publish all events to the `everybody` channel
-app.publish(() => app.channel('everybody'));
 
 // Initialize the boxstatus service
 app.use('boxstatus', memory({
@@ -63,5 +45,14 @@ app.use('boxstatus', memory({
     max: 25
   }
 }));
+
+// On any real-time connection, add it to the `everybody` channel
+app.on('connection', connection => app.channel('everybody').join(connection));
+
+// Publish all events to the `everybody` channel
+app.publish(() => app.channel('everybody'));
+
+
+
 
 module.exports = app;
