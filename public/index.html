@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
+    <title>Box Status</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="//cdn.rawgit.com/feathersjs/feathers-chat/v0.2.0/public/base.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/feathersjs/feathers-chat/v0.2.0/public/chat.css">
+    <style>
+        .status_messages {
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" class="flex flex-column">
+        
+        <main class="flex flex-column">
+          <header class="title-bar flex flex-row flex-center">
+            <div class="title-wrapper block center-element">
+                <h2 class="center-text">Box Status</h2>
+            </div>
+          </header>
+
+          <div class="flex flex-row flex-1 clear">
+            <aside class="sidebar col col-3 flex flex-column flex-space-between">
+              <header class="flex flex-row flex-center">
+                <h4 class="font-300 text-center">
+                  Control The box
+                </h4>
+              </header>
+
+               <form class="flex flex-col flex-space-between flex-start">
+                <p>
+                    <input type="button" class="button-primary" id="open" 
+                    value="Open The Box" />
+                </p>
+                <p>
+                    <input type="button" class="button-primary" id="close"
+                    value="Close The Box" />
+                </p>
+                </form>
+            </aside>
+
+            <div class="flex flex-column col col-9">
+              <main class="status_messages"></main>
+
+             
+            </div>
+          </div>
+        </main>
+    </div>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script type="text/javascript" src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+    <script type="text/javascript" src="//unpkg.com/feathers-memory@^2.0.0/dist/feathers-memory.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    
+    <script src="js/client.js"></script>
+
+</body>
+</html>
