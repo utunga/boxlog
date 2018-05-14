@@ -42,7 +42,7 @@ const setup = async () => {
   });
 
   // We want to show the newest message last
-  statuses.data.forEach(addMessage);
+  statuses.data.reverse().forEach(addMessage);
 
 };
 
