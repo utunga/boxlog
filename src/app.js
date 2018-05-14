@@ -12,6 +12,7 @@ const socketio = require('@feathersjs/socketio');
 const memory = require('feathers-memory');
 
 
+
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
@@ -35,16 +36,26 @@ app.use('/', express.static(app.get('public')));
 app.configure(express.rest());
 app.configure(socketio());
 
-// FOR NOW
+// Configure other middleware (see `middleware/index.js`)
+app.configure(middleware);
+// Set up our services (see `services/index.js`)
+app.configure(services);
+// Set up event channels (see channels.js)
+app.configure(channels);
 
+// Configure a middleware for 404s and the error handler
+app.use(express.notFound());
+app.use(express.errorHandler({ logger }));
 
-// Initialize the boxstatus service
-app.use('boxstatus', memory({
-  paginate: {
-    default: 10,
-    max: 25
-  }
-}));
+app.hooks(appHooks);
+
+//Initialize the boxstatus service
+// app.use('boxstatus', memory({
+//   paginate: {
+//     default: 10,
+//     max: 25
+//   }
+// }));
 
 // On any real-time connection, add it to the `everybody` channel
 app.on('connection', connection => app.channel('everybody').join(connection));

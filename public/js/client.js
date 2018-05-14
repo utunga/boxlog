@@ -13,20 +13,6 @@ client.configure(feathers.authentication({
   storage: window.localStorage
 }));
 
-// // Listen to new boxstatus being created
-// socket.on('boxstatus created', message =>
-//   console.log('Someone created a message', message)
-// );
-
-// socket.emit('create', 'boxstatus', {
-//   text: 'Hello from socket'
-// }, (error, result) => {
-//   if (error) throw error
-//   socket.emit('find', 'boxstatus', (error, messageList) => {
-//     if (error) throw error
-//     console.log('Current boxstatus', messageList);
-//   });
-// });
 document.addEventListener('click', async ev => {
     if (ev.target.id == 'open') {
         ev.preventDefault();
