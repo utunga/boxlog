@@ -17,14 +17,14 @@ document.addEventListener('click', async ev => {
     if (ev.target.id == 'open') {
         ev.preventDefault();
         // Create a new message and then clear the input field
-        await client.service('boxstatus').create({
+        await client.service('box-status').create({
           status: "opened"
         });
     }
     if (ev.target.id == 'close') {
         ev.preventDefault();
         // Create a new message and then clear the input field
-        await client.service('boxstatus').create({
+        await client.service('box-status').create({
           status: "closed"
         });
     }
@@ -34,7 +34,7 @@ const setup = async () => {
 
   // Find the latest 25 messages. They will come with the newest first
   // which is why we have to reverse before adding them
-  const statuses = await client.service('boxstatus').find({
+  const statuses = await client.service('box-status').find({
     query: {
       $sort: { createdAt: -1 },
       $limit: 30
@@ -69,5 +69,5 @@ const addMessage = message => {
 };
 
 // Listen to created events and add the new message in real-time
-client.service('boxstatus').on('created', addMessage);
+client.service('box-status').on('created', addMessage);
 setup();

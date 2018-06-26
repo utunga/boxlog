@@ -3,25 +3,31 @@ const favicon = require('serve-favicon');
 const compress = require('compression');
 const cors = require('cors');
 const helmet = require('helmet');
-const logger = require('winston');
+const winston = require('winston');
+const logger = require('feathers-logger');
 
 const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 const memory = require('feathers-memory');
-
-
+const seeder = require('feathers-seeder');
 
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
+const seed = require('./seed')
+const mongodb = require('./mongodb');
+
+const mongoose = require('./mongoose');
 
 const app = express(feathers());
 
 // Load app configuration
 app.configure(configuration());
+app.configure(logger(winston));
+app.configure(seeder(seed));
 // Enable CORS, security, compression, favicon and body parsing
 app.use(cors());
 app.use(helmet());
@@ -36,6 +42,10 @@ app.use('/', express.static(app.get('public')));
 app.configure(express.rest());
 app.configure(socketio());
 
+app.configure(mongodb);
+
+app.configure(mongoose);
+
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
 // Set up our services (see `services/index.js`)
@@ -46,11 +56,19 @@ app.configure(channels);
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
-
+app.seed().then(() => {
+  app.service('contract-type').find().then(
+    contractTypes => app.service('box').find().then(
+        boxes => {
+            console.log(contractTypes)
+             console.log(boxes)
+        })
+    );
+});
 app.hooks(appHooks);
 
 //Initialize the boxstatus service
-// app.use('boxstatus', memory({
+// app.use('box-status', memory({
 //   paginate: {
 //     default: 10,
 //     max: 25
@@ -62,8 +80,6 @@ app.on('connection', connection => app.channel('everybody').join(connection));
 
 // Publish all events to the `everybody` channel
 app.publish(() => app.channel('everybody'));
-
-
 
 
 module.exports = app;

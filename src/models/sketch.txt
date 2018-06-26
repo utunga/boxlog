@@ -1,0 +1,46 @@
+for long polling
+
+a user has a box has an active contract
+one type of contract = a timed contract
+polling to enable the contract to determine when its status changes
+how to get that into the long polling?
+
+websocket endpoint 
+
+'/box/{id}/contract_status' 
+ 
+contract_status find attached/active contract/s (if any)
+load from /contract/{id}/status ?
+
+shouldopen should (later)
+
+
+---
+user {
+    user_id guid
+    name str
+    auth {}
+    contracts [contract]
+}
+
+contract {
+    user_id
+}
+
+contract_state {
+    box_id
+    job_id
+    ..
+}
+
+box {
+    user_id
+    contract_id
+}
+
+job {
+    schedule
+    action
+    callback
+}
+
