@@ -1,4 +1,8 @@
 {
     "name": "boxlog",
-    "alias": "drama-box-log"
+    "alias": "leap-box-demo",
+    "env": {
+      "PORT": 8000,
+      "DB": "@db"
+    }
 }

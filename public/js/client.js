@@ -42,12 +42,12 @@ const setup = async () => {
   });
 
   // We want to show the newest message last
-  statuses.data.reverse().forEach(addMessage);
+  statuses.data.reverse().forEach(addBoxStatus);
 
 };
 
 // Renders a new message and finds the user that belongs to the message
-const addMessage = message => {
+const addBoxStatus = message => {
     const message_div = document.querySelector('.status_messages');
 
     const status = message.status;
@@ -68,6 +68,23 @@ const addMessage = message => {
     //message_div.scrollTop = message_div.scrollHeight - message_div.clientHeight;
 };
 
+const addContractStatus = message => {
+    const message_div = document.querySelector('#contract_status');
+
+    const status = message.status;
+
+    if(message_div) {
+        message_div.insertAdjacentHTML( 'afterbegin', 
+        `<p><span>${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
+         ${status}
+         </p>`);
+    }
+
+    message_div.scrollTop = 0;
+    //message_div.scrollTop = message_div.scrollHeight - message_div.clientHeight;
+};
 // Listen to created events and add the new message in real-time
-client.service('box-status').on('created', addMessage);
+client.service('box-status').on('created', addBoxStatus);
+client.service('contract-status').on('created', addContractStatus);
+
 setup();

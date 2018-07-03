@@ -60,20 +60,12 @@ app.seed().then(() => {
   app.service('contract-type').find().then(
     contractTypes => app.service('box').find().then(
         boxes => {
-            console.log(contractTypes)
-             console.log(boxes)
+            //console.log(contractTypes)
+            //console.log(boxes)
         })
     );
 });
 app.hooks(appHooks);
-
-//Initialize the boxstatus service
-// app.use('box-status', memory({
-//   paginate: {
-//     default: 10,
-//     max: 25
-//   }
-// }));
 
 // On any real-time connection, add it to the `everybody` channel
 app.on('connection', connection => app.channel('everybody').join(connection));
