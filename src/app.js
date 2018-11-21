@@ -81,8 +81,9 @@ app.seed().then(() => {
 });
 
 
-// remove all contract-events at startup
+// remove all box-status and contract-events at startup
 app.service('contract-event').remove(null, {});
+app.service('box-status').remove(null, {});
 
          
 app.hooks(appHooks);

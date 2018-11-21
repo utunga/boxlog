@@ -2,6 +2,9 @@
 const mqtt = require('../middleware/mqtt_wrapper');
 
 
+
+
+
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return async context => {
   
@@ -17,14 +20,26 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
                 $limit: 0 // $limit==0 makes this a faster/count query
               }});
 
+    var contract = await context.app
+        .service('contract')
+        .get(context.data.contract_id);
+    
     // if an odd number of events, toggle on; otherwise off
+
+    function receiveStatusEvent(box_id, boxStatusMessage) {
+        context.app.service('box-status').create({
+            box_id: box_id,
+            status: boxStatusMessage
+        });
+    }
+ 
     if (events.total % 2 == 1) {
         console.log("toggling on"); 
-        mqtt.send("true"); 
+        mqtt.send("true", contract.box_id, receiveStatusEvent); 
     }
     else {
         console.log("toggling off");   
-        mqtt.send("false"); 
+        mqtt.send("false", contract.box_id, receiveStatusEvent); 
     }
     
 

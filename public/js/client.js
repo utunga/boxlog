@@ -44,6 +44,17 @@ const setup = async () => {
   // We want to show the newest message last
   statuses.data.reverse().forEach(addBoxStatus);
 
+  console.log(statuses);
+  const contractEvents = await client.service('contract-event').find({
+    query: {
+      $sort: { createdAt: -1 },
+      $limit: 30
+    }
+  });
+
+  // We want to show the newest message last
+  contractEvents.data.reverse().forEach(addContractEvent);
+
 };
 
 // Renders a new message and finds the user that belongs to the message
@@ -51,6 +62,7 @@ const addBoxStatus = message => {
     const message_div = document.querySelector('.status_messages');
 
     const status = message.status;
+    const box_id = message.box_id;
 
     if(message_div) {
         message_div.insertAdjacentHTML( 'afterbegin', 
@@ -58,7 +70,9 @@ const addBoxStatus = message => {
           <div class="message-wrapper">
             <p class="message-content font-300">
                 <span class="sent-date font-300">${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
-              <br><b> ${status}</b></p>
+               <br><b>BOX STATUS</b> 
+               <br><b>box_id:</b> ${box_id}
+               <br><b>message:</b> ${status}</b></p>
         
           </div>
         </div>`);
@@ -67,6 +81,31 @@ const addBoxStatus = message => {
     message_div.scrollTop = 0;
     //message_div.scrollTop = message_div.scrollHeight - message_div.clientHeight;
 };
+
+const addContractEvent = contractEvent => {
+    const message_div = document.querySelector('.status_messages');
+
+    const message = contractEvent.message;
+    const contract_id = contractEvent.contract_id;
+
+    if(message_div) {
+        message_div.insertAdjacentHTML( 'afterbegin', 
+        `<div class="message flex flex-row">
+          <div class="message-wrapper">
+            <p class="message-content font-300">
+              <span class="sent-date font-300">${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
+              <br><b>CONTRACT EVENT</b> 
+              <br><b>contract_id:</b> ${contract_id}
+              <br><b>message:</b> ${message}</p>
+            
+          </div>
+        </div>`);
+    }
+
+    message_div.scrollTop = 0;
+    //message_div.scrollTop = message_div.scrollHeight - message_div.clientHeight;
+};
+
 
 const addContractStatus = message => {
     const message_div = document.querySelector('#contract_status');
@@ -86,5 +125,6 @@ const addContractStatus = message => {
 // Listen to created events and add the new message in real-time
 client.service('box-status').on('created', addBoxStatus);
 client.service('contract-status').on('created', addContractStatus);
+client.service('contract-event').on('created', addContractEvent);
 
 setup();

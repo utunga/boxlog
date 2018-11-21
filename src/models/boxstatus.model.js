@@ -6,7 +6,8 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const boxStatus = new Schema({
-    status: { type: String, required: true }
+    status: { type: String, required: true },
+    box_id: { type: Schema.Types.ObjectId, ref: 'box', required: false }
   }, {
     timestamps: true
   });
