@@ -37,7 +37,7 @@ Install [now](https://zeit.co/now). Then run.
 
 ## Actually doing testing right here
 
-Just making a change to the readme to test zap integration. 
+Just making another change to the readme to test zap integration. 
 
 ## License
 
