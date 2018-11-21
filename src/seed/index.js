@@ -5,7 +5,7 @@ module.exports = {
     {
       path: 'box',
       template: {
-        name: "The only box (for now)"
+        name: "The only box"
       }
     },
     {
@@ -17,7 +17,7 @@ module.exports = {
     {
       path: 'contract',
       template: {
-        name: "The Active Contract"
+        name: "The active contract"
       }
     }
   ]

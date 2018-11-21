@@ -3,7 +3,7 @@ const logger = require('./hooks/logger');
 
 module.exports = {
   before: {
-    all: [ logger() ],
+    all: [], // logger() ],
     find: [],
     get: [],
     create: [],
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   after: {
-    all: [ logger() ],
+    all: [],
     find: [],
     get: [],
     create: [],

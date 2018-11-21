@@ -56,15 +56,35 @@ app.configure(channels);
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
+
+// make sure 'theContract' is hooked up to 'theBox' 
 app.seed().then(() => {
-  app.service('contract-type').find().then(
-    contractTypes => app.service('box').find().then(
-        boxes => {
-            //console.log(contractTypes)
-            //console.log(boxes)
-        })
-    );
+  app.service('contract-type').find({query: {name: "Toggler"}})
+  .then(
+    togglerContractTypes =>
+        app.service('box').find({query: {name: "The only box"}})
+        .then(
+        theBoxes => 
+            app.service('contract').find({query: {name: "The active contract"}})
+            .then(
+                theContracts => {
+                    var togglerContractType = togglerContractTypes.data[0];
+                    var theBox = theBoxes.data[0];
+                    var theContract = theContracts.data[0];
+                    theContract.box_id = theBox._id;
+                    theContract.contract_type_id = togglerContractType._id;
+                    app.service('contract').update(theContract._id, theContract); 
+                }
+            )     
+        )
+    )
 });
+
+
+// remove all contract-events at startup
+app.service('contract-event').remove(null, {});
+
+         
 app.hooks(appHooks);
 
 // On any real-time connection, add it to the `everybody` channel

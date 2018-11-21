@@ -3,6 +3,9 @@
     "alias": "leap-box-demo",
     "env": {
       "PORT": 8000,
-      "DB": "@db"
+      "DB": "@db",
+      "MQTT_USER": "boxleap@gmail.com",
+      "MQTT_PASS": "@MQTT_PASS",
+      "MQTT_RELAY": "mqtt://mqtt.dioty.co:1883"
     }
 }

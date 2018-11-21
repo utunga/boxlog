@@ -7,8 +7,9 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
 
   const contract = new Schema({
-    box: { type: Schema.Types.ObjectId, ref: 'box', required: false },
-    contractType: { type: Schema.Types.ObjectId, ref: 'contractType' },
+    name: { type: String, required: false },
+    box_id: { type: Schema.Types.ObjectId, ref: 'box', required: false },
+    contract_type_id: { type: Schema.Types.ObjectId, ref: 'contractType' },
   }, {
     timestamps: true
   });
