@@ -35,6 +35,10 @@ Install [now](https://zeit.co/now). Then run.
   now alias
   ```
 
+## Actually doing testing right here
+
+Just making a change to the readme to test zap integration. 
+
 ## License
 
 Copyright (c) 2016
