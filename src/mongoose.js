@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 module.exports = function (app) {
-  mongoose.connect( process.env.DB,
-     ()=>{ console.log("connected to database " + process.env.DB); });
+  mongo_uri = app.get('mongo_uri');
+  mongoose.connect(mongo_uri, {useNewUrlParser:true})
+	  .then(client => {
+	  	console.log(`Mongoose connected to database ${mongo_uri}`);
+	  });
   mongoose.Promise = global.Promise;
 
-  //|| app.get('mongodb'), 
   app.set('mongooseClient', mongoose);
 };

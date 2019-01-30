@@ -18,11 +18,16 @@ const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
 const seed = require('./seed')
+// for now we have both a mongodb and a mongoose client
+// because diff bits talk different things 
+// (specifically seed expects mongodb)
 const mongodb = require('./mongodb');
-
 const mongoose = require('./mongoose');
 
 const app = express(feathers());
+app.set('port', process.env.PORT || 3030);
+app.set('mongo_uri', process.env.MONGO_URI);
+
 
 // Load app configuration
 app.configure(configuration());
@@ -42,9 +47,9 @@ app.use('/', express.static(app.get('public')));
 app.configure(express.rest());
 app.configure(socketio());
 
-app.configure(mongodb);
 
 app.configure(mongoose);
+app.configure(mongodb);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
