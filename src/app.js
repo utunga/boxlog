@@ -25,8 +25,16 @@ const mongodb = require('./mongodb');
 const mongoose = require('./mongoose');
 
 const app = express(feathers());
+
+
+// set up environment variables 
+// FIXME: change this to use .env file etc
 app.set('port', process.env.PORT || 3030);
 app.set('mongo_uri', process.env.MONGO_URI);
+app.set('mqtt_pass', process.env.MQTT_PASS);
+app.set('mqtt_user', process.env.MQTT_USER || "boxleap@gmail.com");
+app.set('mqtt_relay', process.env.MQTT_RELAY ||  "mqtt://mqtt.dioty.co:1883");
+
 
 
 // Load app configuration

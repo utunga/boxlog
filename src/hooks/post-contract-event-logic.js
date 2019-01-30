@@ -2,9 +2,6 @@
 const mqtt = require('../middleware/mqtt_wrapper');
 
 
-
-
-
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return async context => {
   
@@ -35,11 +32,11 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
  
     if (events.total % 2 == 1) {
         console.log("toggling on"); 
-        mqtt.send("true", contract.box_id, receiveStatusEvent); 
+        mqtt.send(context.app, "true", contract.box_id, receiveStatusEvent); 
     }
     else {
         console.log("toggling off");   
-        mqtt.send("false", contract.box_id, receiveStatusEvent); 
+        mqtt.send(context.app, "false", contract.box_id, receiveStatusEvent); 
     }
     
 
