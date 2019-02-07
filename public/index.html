@@ -31,36 +31,45 @@
 			  
 			   <form class="flex flex-column flex-space-between clear">
 					<header class="flex flex-row flex-left">
-						<h4 class="font-300 text-center">
+						<h3 class="font-300 text-center">
 						  Control The box
-						</h4>
+						</h3>
 					</header>
-					<div class="flex">
-						<input type="button" class="button-primary" id="open" 
-						value="Open The Box" />
-					</div>
-					<div class="flex">
-						<input type="button" class="button-primary" id="close"
-						value="Close The Box" />
+
+					<div class="flex flex-column">
+						<label for="hashtag">HashTag</label>
+						<input type="text"  id="hashtag" />
+						<label for="hashtag"># Mentions Needed To Unlock</label>
+						<input type="text" id="num_needed" />
+						<input type="button" class="button-primary" id="lock"
+						value="Set and lock The Box" />
 					</div>
 				</form>
 
-				<div class="flex flex-column flex-space-between clear">
-					<header class="flex flex-row flex-left">
-						<h4 class="font-300 text-center">
-						  Contract Status
-						</h4>
-					</header>
-					<div class="flex" id="contract_status">
-					</div>
-				</div>
+
 				
 			</aside>
 
 			<div class="flex flex-column col col-9">
-			  <main class="status_messages"></main>
-
-			 
+				<div>
+					<header class="flex flex-row flex-left">
+						<h2 class="font-300 text-center">
+						 Box Status
+						</h2>
+					</header>
+					<div class="flex" id="box_status">
+					</div>
+				</div>
+				<div>
+					<header class="flex flex-row flex-left">
+						<h2 class="font-300 text-center">
+						  Events
+						</h2>
+					</header>
+					<div class="flex" id="events">
+					</div>
+				</div>
+			  <main class="status_messages"></main>			 
 			</div>
 		  </div>
 		</main>

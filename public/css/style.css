@@ -225,14 +225,18 @@ main.chat .message p.message-header span.sent-date {
 
 /* Send Message Form */
 
-#app form input {
-  height: auto !important;
-  padding: 10px;
-  margin: 10px;
+#app form {
+  padding:10px;
 }
 
-#send-message button {
-  margin-left: 10px;
+#app form input  {
+  height: auto !important;
+  padding: 10px;
+}
+
+#app form label,
+#app form input[type=button] {
+  margin-top: 20px;
 }
 
 [v-cloak] {

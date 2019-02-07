@@ -32,6 +32,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
  
     if (events.total % 2 == 1) {
         console.log("toggling on"); 
+        // unlocked == true , by default / no current is locked
         mqtt.send(context.app, "true", contract.box_id, receiveStatusEvent); 
     }
     else {

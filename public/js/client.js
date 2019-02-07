@@ -14,18 +14,19 @@ client.configure(feathers.authentication({
 }));
 
 document.addEventListener('click', async ev => {
-    if (ev.target.id == 'open') {
+
+    if (ev.target.id == 'lock') {
         ev.preventDefault();
+        
+        const num_needed_input = document.querySelector('#num_needed');
+        const hashtag_input = document.querySelector('#hashtag');
+
         // Create a new message and then clear the input field
-        await client.service('box-status').create({
-          status: "opened"
-        });
-    }
-    if (ev.target.id == 'close') {
-        ev.preventDefault();
-        // Create a new message and then clear the input field
-        await client.service('box-status').create({
-          status: "closed"
+        await client.service('box-control').create({
+            box_id: 1,
+            action: "lock",
+            num_needed: num_needed_input.value,
+            hashtag: hashtag_input.value
         });
     }
 });
@@ -40,6 +41,10 @@ const setup = async () => {
       $limit: 30
     }
   });
+
+
+  const box_control = await client.service('box-control').find();
+  console.log(box_control);
 
   // We want to show the newest message last
   statuses.data.reverse().forEach(addBoxStatus);
