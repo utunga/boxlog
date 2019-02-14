@@ -18,16 +18,29 @@ document.addEventListener('click', async ev => {
     if (ev.target.id == 'lock') {
         ev.preventDefault();
         
-        const num_needed_input = document.querySelector('#num_needed');
-        const hashtag_input = document.querySelector('#hashtag');
-
-        // Create a new message and then clear the input field
-        await client.service('box-control').create({
+        var num_needed_input = document.getElementById('num_needed');
+        var hashtag_input = document.getElementById('hashtag');
+        num_needed_input.value = parseInt("" + num_needed_input.value);
+        
+        client.service('box-control').create({
             box_id: 1,
             action: "lock",
-            num_needed: num_needed_input.value,
+            num_needed: parseInt(num_needed_input.value),
             hashtag: hashtag_input.value
         });
+    }
+
+
+    if (ev.target.id == 'tweet') {
+      ev.preventDefault();
+      
+      var tweet_body_input = document.getElementById('tweet_body');
+      if (tweet_body_input.value) {
+        // Create a new message and then clear the input field
+        client.service('contract-event').create({
+            message: tweet_body_input.value
+        });
+      }
     }
 });
 
@@ -44,7 +57,11 @@ const setup = async () => {
 
 
   const box_control = await client.service('box-control').find();
-  console.log(box_control);
+  var num_needed_input = document.getElementById('num_needed');
+  var hashtag_input = document.getElementById('hashtag');
+  num_needed_input.value = box_control.num_needed;
+  hashtag_input.value = box_control.hashtag;
+
 
   // We want to show the newest message last
   statuses.data.reverse().forEach(addBoxStatus);
@@ -64,7 +81,7 @@ const setup = async () => {
 
 // Renders a new message and finds the user that belongs to the message
 const addBoxStatus = message => {
-    const message_div = document.querySelector('.status_messages');
+    const message_div = document.querySelector('.box_messages');
 
     const status = message.status;
     const box_id = message.box_id;
@@ -88,7 +105,7 @@ const addBoxStatus = message => {
 };
 
 const addContractEvent = contractEvent => {
-    const message_div = document.querySelector('.status_messages');
+    const message_div = document.querySelector('.event_messages');
 
     const message = contractEvent.message;
     const contract_id = contractEvent.contract_id;
@@ -99,10 +116,8 @@ const addContractEvent = contractEvent => {
           <div class="message-wrapper">
             <p class="message-content font-300">
               <span class="sent-date font-300">${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
-              <br><b>CONTRACT EVENT</b> 
               <br><b>contract_id:</b> ${contract_id}
               <br><b>message:</b> ${message}</p>
-            
           </div>
         </div>`);
     }

@@ -16,12 +16,10 @@ class SingletonService extends MongooseService {
 module.exports = function () {
   const app = this;
   const Model = createModel(app);
-  const paginate = app.get('paginate');
-
+  
   const options = {
     name: 'box-control',
-    Model,
-    paginate
+    Model
   };
 
   // Initialize our service with any options it requires

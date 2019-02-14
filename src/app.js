@@ -92,7 +92,7 @@ app.seed().then(() => {
         )
     )
 });
-         
+
 app.hooks(appHooks);
 
 // On any real-time connection, add it to the `everybody` channel

@@ -1,13 +1,10 @@
 
 const mqtt = require('../middleware/mqtt_wrapper');
 
-
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return async context => {
   
-    //FIXME: should load logic depending on contract type
-    //       for now we just always run toggler Logic
-    console.log("running 'toggler' contract logic..");
+    console.log("running contract event logic..");
 
     // how many events for this particular contract?
     var events = await context.app
@@ -16,12 +13,16 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
                 contract_id: context.data.contract_id,
                 $limit: 0 // $limit==0 makes this a faster/count query
               }});
-
+    console.log(events);
+    console.log(context.data.contract_id);
+    
     var contract = await context.app
         .service('contract')
         .get(context.data.contract_id);
     
-    // if an odd number of events, toggle on; otherwise off
+    var box_control = await context.app
+        .service('box-control')
+        .find({})
 
     function receiveStatusEvent(box_id, boxStatusMessage) {
         context.app.service('box-status').create({
@@ -29,17 +30,28 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
             status: boxStatusMessage
         });
     }
- 
-    if (events.total % 2 == 1) {
-        console.log("toggling on"); 
-        // unlocked == true , by default / no current is locked
-        mqtt.send(context.app, "true", contract.box_id, receiveStatusEvent); 
+
+    var num_required = parseFloat(box_control.num_needed);
+
+    percentDone = 1;
+    if (num_required>0) {
+        var percentDone = events.total/num_required;
+    }
+
+    if (percentDone==0) {
+        console.log("contract-event: locking");
+        mqtt.send(context.app, "lock", contract.box_id, receiveStatusEvent); 
+    }
+    else if (percentDone>=1) {
+        console.log("contract-event: unlocking");
+        mqtt.send(context.app, "unlock", contract.box_id, receiveStatusEvent);    
     }
     else {
-        console.log("toggling off");   
-        mqtt.send(context.app, "false", contract.box_id, receiveStatusEvent); 
+        var peMessage = "pe" + ("" + parseFloat(percentDone).toFixed(2)).substring(2);
+        console.log(percentDone*100); 
+        console.log("contract-event: " + peMessage); 
+        mqtt.send(context.app, peMessage, contract.box_id, receiveStatusEvent);    
     }
-    
 
     // Best practice: hooks should always return the context
     return context;

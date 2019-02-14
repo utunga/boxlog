@@ -18,7 +18,9 @@ module.exports = function (app) {
 
   // export the contract event service on a nested route
   // fixme: need to restrict to only events for that contract
-  app.use('/contract/:contractId/event', service);
+  //app.use('/contract/:contractId/event', service);
+
+  app.use('/contract-event', service);
   
   service.hooks(hooks);
 

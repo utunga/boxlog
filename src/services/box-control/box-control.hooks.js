@@ -1,3 +1,4 @@
+const process_box_control_event = require('../../hooks/process_box_control_event');
 
 module.exports = {
   before: {
@@ -14,7 +15,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [process_box_control_event()],
     update: [],
     patch: [],
     remove: []

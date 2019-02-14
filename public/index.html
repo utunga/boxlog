@@ -38,11 +38,25 @@
 
 					<div class="flex flex-column">
 						<label for="hashtag">HashTag</label>
-						<input type="text"  id="hashtag" />
-						<label for="hashtag"># Mentions Needed To Unlock</label>
-						<input type="text" id="num_needed" />
-						<input type="button" class="button-primary" id="lock"
-						value="Set and lock The Box" />
+						<input type="text" value="winning"  id="hashtag" />
+						<label for="num_needed"># Mentions Needed To Unlock</label>
+						<input type="text" value="10" id="num_needed" />
+						<input type="button" class="button-primary" id="lock" value="Set and lock The Box" />
+					</div>
+				</form>
+
+
+  			<form class="flex flex-column flex-space-between clear">
+					<header class="flex flex-row flex-left">
+						<h3 class="font-300 text-center">
+						  Fake tweet
+						</h3>
+					</header>
+
+					<div class="flex flex-column">
+						<label for="hashtag">Text</label>
+						<input type="text" value="I'm #winning" id="tweet_body" />
+						<input type="button" class="button-primary" id="tweet" value="Post" />
 					</div>
 				</form>
 
@@ -50,7 +64,7 @@
 				
 			</aside>
 
-			<div class="flex flex-column col col-9">
+			<div class="flex flex-column col col-5">
 				<div>
 					<header class="flex flex-row flex-left">
 						<h2 class="font-300 text-center">
@@ -58,8 +72,11 @@
 						</h2>
 					</header>
 					<div class="flex" id="box_status">
+						<main class="box_messages"></main>	
 					</div>
 				</div>
+			</div>
+			<div class="flex flex-column col col-4">
 				<div>
 					<header class="flex flex-row flex-left">
 						<h2 class="font-300 text-center">
@@ -67,9 +84,9 @@
 						</h2>
 					</header>
 					<div class="flex" id="events">
+						<main class="event_messages"></main>	
 					</div>
 				</div>
-			  <main class="status_messages"></main>			 
 			</div>
 		  </div>
 		</main>
