@@ -18,35 +18,36 @@ document.addEventListener('click', async ev => {
     if (ev.target.id == 'lock') {
         ev.preventDefault();
         
-        var num_needed_input = document.getElementById('num_needed');
-        var hashtag_input = document.getElementById('hashtag');
-        num_needed_input.value = parseInt("" + num_needed_input.value);
-        
         client.service('box-control').create({
             box_id: 1,
-            action: "lock",
-            num_needed: parseInt(num_needed_input.value),
-            hashtag: hashtag_input.value
+            action: "lock"
         });
 
         //reload the page
         window.location.reload(false); 
     }
 
-
-    if (ev.target.id == 'tweet') {
+    if (ev.target.id == 'check') {
       ev.preventDefault();
-      
-      var tweet_body_input = document.getElementById('tweet_body');
-      if (tweet_body_input.value) {
-        var hashtag_input = document.getElementById('hashtag');
-        // Create a new message and then clear the input field
-        client.service('contract-event').create({
-            hashtag: hashtag_input.value,
-            message: tweet_body_input.value
-        });
-      }
+      // Create a new message to trigger a check status 
+      client.service('contract-event').create({
+          message: "check status"
+      });
     }
+  
+    // if (ev.target.id == 'tweet') {
+    //   ev.preventDefault();
+      
+    //   var tweet_body_input = document.getElementById('tweet_body');
+    //   if (tweet_body_input.value) {
+    //     var hashtag_input = document.getElementById('hashtag');
+    //     // Create a new message and then clear the input field
+    //     client.service('contract-event').create({
+    //         hashtag: hashtag_input.value,
+    //         message: tweet_body_input.value
+    //     });
+    //   }
+    // }
 });
 
 const setup = async () => {
@@ -59,13 +60,6 @@ const setup = async () => {
       $limit: 30
     }
   });
-
-
-  const box_control = await client.service('box-control').find();
-  var num_needed_input = document.getElementById('num_needed');
-  var hashtag_input = document.getElementById('hashtag');
-  num_needed_input.value = box_control.num_needed;
-  hashtag_input.value = box_control.hashtag;
 
 
   // We want to show the newest message last
@@ -112,7 +106,6 @@ const addContractEvent = contractEvent => {
     const message_div = document.querySelector('.event_messages');
 
     const message = contractEvent.message;
-    const hashtag = contractEvent.hashtag;
     const contract_id = contractEvent.contract_id;
 
     if(message_div) {
@@ -122,7 +115,6 @@ const addContractEvent = contractEvent => {
             <p class="message-content font-300">
               <span class="sent-date font-300">${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
               <br><b>contract_id:</b> ${contract_id}
-              <br><b>hashtag:</b> ${hashtag}
               <br><b>message:</b> ${message}</p>
           </div>
         </div>`);

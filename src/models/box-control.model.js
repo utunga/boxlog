@@ -8,8 +8,8 @@ module.exports = function (app) {
   const boxControl = new Schema({
 	box_id: { type: Number, required: true },
   	action: { type: String, required: true },
-  	num_needed: { type: Number, required: true },
-  	hashtag: { type: String, required: true },
+  	num_needed: { type: Number, required: false },
+  	hashtag: { type: String, required: false },
   }, {
     timestamps: true
   });

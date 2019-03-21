@@ -6,7 +6,7 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const contractEvent = new Schema({
-  	hashtag: { type: String, required: true },
+  	hashtag: { type: String, required: false },
     contract_id: { type: Schema.Types.ObjectId, ref: 'contract' },
     message: { type: String, required: true }
   }, {

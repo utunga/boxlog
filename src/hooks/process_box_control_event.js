@@ -7,12 +7,12 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     //       for now we just always run toggler Logic
     console.log("process box control event ..");
 
-    the_control = await context.app.service('box-control').find({});
-    if (the_control) {
-        the_control.num_needed = context.data.num_needed;
-        the_control.hashtag = context.data.hashtag;
-        await context.app.service('box-control').update(the_control._id, the_control);
-    }
+    // the_control = await context.app.service('box-control').find({});
+    // if (the_control) {
+    //     the_control.num_needed = context.data.num_needed;
+    //     the_control.hashtag = context.data.hashtag;
+    //     await context.app.service('box-control').update(the_control._id, the_control);
+    // }
 
     var the_contracts = await context.app
         .service('contract')

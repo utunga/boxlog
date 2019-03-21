@@ -10,9 +10,12 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
       throw new Error('A contract event message must have a message');
     }
 
-    if(!data.hashtag) {
-      throw new Error('A contract event message must have a hashtag (for now)');
-    }
+    // if(!data.hashtag) {
+    //   throw new Error('A contract event message must have a hashtag (for now)');
+    // }
+
+    // for now we don't do anything because all the logic
+    // is in the post  contract event hook
 
     console.log("received contract-event");
     console.log(context.data);
@@ -25,14 +28,14 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
         .data[0];
     context.data.contract_id = theContract._id;
     
-    the_control = await context.app.service('box-control').find({});
-    watching_hashtag = the_control.hashtag;
+    // the_control = await context.app.service('box-control').find({});
+    // watching_hashtag = the_control.hashtag;
 
-    if (data.hashtag != watching_hashtag) {
-        console.log("Skipping " + data.hashtag + " as only watching hashtag:" + watching_hashtag + ".");
-        context.result = "Skipping " + data.hashtag ;
-        return context;
-    }
+    // if (data.hashtag != watching_hashtag) {
+    //     console.log("Skipping " + data.hashtag + " as only watching hashtag:" + watching_hashtag + ".");
+    //     context.result = "Skipping " + data.hashtag ;
+    //     return context;
+    // }
     
     // Best practice: hooks should always return the context
     return context;
