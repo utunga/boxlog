@@ -1,5 +1,5 @@
 const process_contract_event = require('../../hooks/process-contract-event');
-const after_contract_event = require('../../hooks/post-contract-event-logic');
+const after_contract_event = require('../../hooks/trello-post-contract-event-logic');
 
 module.exports = {
   before: {

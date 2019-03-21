@@ -35,7 +35,8 @@ app.set('mqtt_pass', process.env.MQTT_PASS);
 app.set('mqtt_user', process.env.MQTT_USER || "boxleap@gmail.com");
 app.set('mqtt_relay', process.env.MQTT_RELAY ||  "mqtt://mqtt.dioty.co:1883");
 
-
+app.set('trello_api_key', process.env.TRELLO_API_KEY );
+app.set('trello_oauth_token', process.env.TRELLO_OAUTH_TOKEN);
 
 // Load app configuration
 app.configure(configuration());

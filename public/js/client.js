@@ -28,6 +28,9 @@ document.addEventListener('click', async ev => {
             num_needed: parseInt(num_needed_input.value),
             hashtag: hashtag_input.value
         });
+
+        //reload the page
+        window.location.reload(false); 
     }
 
 
@@ -36,8 +39,10 @@ document.addEventListener('click', async ev => {
       
       var tweet_body_input = document.getElementById('tweet_body');
       if (tweet_body_input.value) {
+        var hashtag_input = document.getElementById('hashtag');
         // Create a new message and then clear the input field
         client.service('contract-event').create({
+            hashtag: hashtag_input.value,
             message: tweet_body_input.value
         });
       }
@@ -92,7 +97,6 @@ const addBoxStatus = message => {
           <div class="message-wrapper">
             <p class="message-content font-300">
                 <span class="sent-date font-300">${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
-               <br><b>BOX STATUS</b> 
                <br><b>box_id:</b> ${box_id}
                <br><b>message:</b> ${status}</b></p>
         
@@ -108,6 +112,7 @@ const addContractEvent = contractEvent => {
     const message_div = document.querySelector('.event_messages');
 
     const message = contractEvent.message;
+    const hashtag = contractEvent.hashtag;
     const contract_id = contractEvent.contract_id;
 
     if(message_div) {
@@ -117,6 +122,7 @@ const addContractEvent = contractEvent => {
             <p class="message-content font-300">
               <span class="sent-date font-300">${moment(message.createdAt).format('MMM Do, hh:mm:ss')}</span>
               <br><b>contract_id:</b> ${contract_id}
+              <br><b>hashtag:</b> ${hashtag}
               <br><b>message:</b> ${message}</p>
           </div>
         </div>`);

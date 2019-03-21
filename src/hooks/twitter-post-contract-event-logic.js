@@ -1,6 +1,5 @@
 
 const mqtt = require('../middleware/mqtt_wrapper');
-const trello = require('../middleware/trello_wrapper');
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return async context => {

@@ -13,15 +13,6 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
         the_control.hashtag = context.data.hashtag;
         await context.app.service('box-control').update(the_control._id, the_control);
     }
-    
-    //FIXME shouldn't have to define this logic twice
-    function receiveStatusEvent(box_id, boxStatusMessage) {
-        context.app.service('box-status').create({
-            box_id: box_id,
-            status: boxStatusMessage
-        });
-    }
-
 
     var the_contracts = await context.app
         .service('contract')
@@ -37,7 +28,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     context.app.service('box-status').remove(null,{});
     
     console.log("processs box-control: locking");
-    mqtt.send(context.app, "lock", the_contract.box_id, receiveStatusEvent); 
+    mqtt.send(context.app, "lock", the_contract.box_id); 
 
    };
 };

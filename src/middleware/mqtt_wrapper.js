@@ -1,8 +1,15 @@
 const mqtt = require('mqtt');
 
+function boxStatusMessage(app, boxId, message) {
+    app.service('box-status').create({
+        box_id: boxId,
+        status: message
+    });
+}
+    
 module.exports =  {
 
-    send: function(app, message, box_id, callbackFn) {
+    send: function(app, message, boxId) {
 
         var mqtt_pass = app.get('mqtt_pass');
         var mqtt_user = app.get('mqtt_user');
@@ -15,8 +22,10 @@ module.exports =  {
         });
 
         client.on('error', function(err) {
-            console.log(`Error connecting to mqtt... ${mqtt_user}:${mqtt_pass} ${mqtt_relay}`);
+            var msg = `Error connecting to mqtt... ${mqtt_user}:${mqtt_pass} ${mqtt_relay}`;
+            console.log(msg);
             console.log(err);
+            boxStatusMessage(app, boxId, msg);
         });
 
         client.on('connect', () => { // Check you have a connection
@@ -35,7 +44,7 @@ module.exports =  {
                     // When a message arrives, log it, and call the callback
                     client.on('message', function(topic, message, packet) {
                         console.log("Received '" + message + "' on '" + topic + "'");
-                        callbackFn(box_id, message);
+                        boxStatusMessage(app, boxId, message);
                     });
                 });
 
@@ -49,6 +58,7 @@ module.exports =  {
                         return;
                     }
                     console.log("Message " + message + " posted to mqtt...");
+                    boxStatusMessage(app, boxId, message + " posted to mqtt");
                     client.end(); // Close the connection after publish
                 });
 
