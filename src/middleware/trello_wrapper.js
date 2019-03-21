@@ -30,11 +30,8 @@ var DONE_LIST_ID = "5c90f899052fe73c0201df63"
 module.exports = {
 	getPercentDone: async function(app) {
 		
-		// trelloApiKey = app.get('trello_api_key');
-		// trelloAuthToken = app.get('trello_oauth_token');
-
-		trelloApiKey = "604d948ba2422494f8b7c8195ea5bb18";
-		trelloAuthToken = "22e6828a5f850717614a507018355e88549e636d02f807da9330b93449832cd4";
+		trelloApiKey = app.get('trello_api_key');
+		trelloAuthToken = app.get('trello_oauth_token');
 
 		todo_count = await getListCardCount(TODO_LIST_ID); 
 		done_count = await getListCardCount(DONE_LIST_ID);
