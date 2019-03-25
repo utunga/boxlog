@@ -1,10 +1,10 @@
-# boxlog
+# Leapbox.Server
 
-> Drama box starter app
+> leapbox back end 
 
 ## About
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+This project aims to build a back end for the [leapbox](http://leapbox.wtf) project. Currently it uses [Feathers](http://feathersjs.com) and MQTT amongst other things.
 
 ## Getting Started
 
@@ -23,11 +23,7 @@ Getting up and running is as easy as 1, 2, 3.
     npm start
     ```
 
-## Testing
-
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Deployment (to [https://drama-box-log.now.sh](https://drama-box-log.now.sh/))
+## Deployment 
 
 Install [now](https://zeit.co/now). Then run. 
   ```
@@ -35,12 +31,3 @@ Install [now](https://zeit.co/now). Then run.
   now alias
   ```
 
-## Actually doing testing right here
-
-Another change to test zap integration. 
-
-## License
-
-Copyright (c) 2016
-
-Licensed under the [MIT license](LICENSE).
