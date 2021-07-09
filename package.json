@@ -1,7 +1,7 @@
 {
-  "name": "boxlog",
+  "name": "leapbox",
   "description": "Drama box starter app",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "homepage": "",
   "main": "src",
   "keywords": [
